@@ -29,6 +29,7 @@ const notificationController = {
               title: "Ứng tuyển thành công",
               body: "Chúng tôi đã gửi CV đến doanh nghiệp",
               companyName: req.body.companyName,
+              createdAt: new Date(),
             },
           ],
         });
@@ -62,6 +63,21 @@ const notificationController = {
       return res.status(500).json({
         error,
       });
+    }
+  },
+
+  updateSeen: async (req, res) => {
+    try {
+      const notification = await notificationModel.findByIdAndUpdate(
+        req.params.id,
+        {
+          seen: true,
+        }
+      );
+      if (!notification) return res.status(404).json("Notification not found");
+      return res.status(200).json(notification);
+    } catch (error) {
+      return res.status(500).json(error);
     }
   },
 };

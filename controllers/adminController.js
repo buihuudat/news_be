@@ -35,7 +35,9 @@ const adminController = {
       const company = await companyModel.findById(req.params.id);
       if (!company)
         return res.status(404).json({ message: "company not found" });
-      const jobs = await jobModel.find({ company: company._id });
+      const jobs = await jobModel
+        .find({ company: company._id })
+        .populate("company");
       return res.status(200).json(jobs);
     } catch (error) {
       return res.status(500).json(error);

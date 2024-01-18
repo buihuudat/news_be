@@ -107,7 +107,7 @@ const userController = {
   },
   getCVApplied: async (req, res) => {
     try {
-      const user = await userFileModel.findOne({ user: req.params.userId });
+      const user = await userFileModel.findOne({ user: req.user._id });
       if (!user) {
         return res.status(400).json({
           message: "Tài khoản không tồn tại",

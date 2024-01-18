@@ -6,6 +6,7 @@ const jobController = require("../controllers/jobController");
 const notificationController = require("../controllers/notificationController");
 
 router.get("/cv-applied", authenticateToken, userController.getCVApplied);
+router.get("/job-applied", authenticateToken, jobController.jobsApplied);
 router.post("/check-auth", authenticateToken, userController.checkAuth);
 router.post("/login", userController.login);
 router.post("/register", userController.register);

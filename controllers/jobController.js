@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const jobModel = require("../models/jobModel");
 const userFileModel = require("../models/userFileModel");
 
@@ -40,6 +41,21 @@ const jobController = {
       }
       return res.status(200).json({ message: "Job applied" });
     } catch (error) {
+      return res.status(500).json(error);
+    }
+  },
+
+  jobsApplied: async (req, res) => {
+    try {
+      const appliedJobs = await jobModel
+        .find({
+          "jobApplied.userId": new mongoose.Types.ObjectId(req.user._id),
+        })
+        .populate("company");
+
+      return res.status(200).json(appliedJobs);
+    } catch (error) {
+      console.log(error);
       return res.status(500).json(error);
     }
   },
