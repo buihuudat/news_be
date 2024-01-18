@@ -127,7 +127,6 @@ const userController = {
 
   updateUser: async (req, res) => {
     const { username } = req.params;
-    const { name, avatar, phone, birthday } = req.body;
     try {
       const user = await userModel.findOneAndUpdate(
         { username: username },
@@ -234,7 +233,7 @@ const userController = {
 
   checkAuth: async (req, res) => {
     try {
-      const user = await userModel.findById(req.decoded._id);
+      const user = await userModel.findById(req.user._id);
       if (!user) {
         return res.status(400).json({
           message: "Tài khoản không tồn tại",

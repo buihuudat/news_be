@@ -4,7 +4,7 @@ const notificationController = {
   get: async (req, res) => {
     try {
       const notifications = await notificationModel.findOne({
-        userId: req.params.userId,
+        userId: req.user._id,
       });
       return res.status(200).json({
         success: true,
@@ -19,7 +19,7 @@ const notificationController = {
   push: async (req, res) => {
     try {
       const userNotification = await notificationModel.findOne({
-        userId: req.body.userId,
+        userId: req.user._id,
       });
       if (!userNotification) {
         await notificationModel.create({
